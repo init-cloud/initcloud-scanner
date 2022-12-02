@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mariadb:10
+    container_name: INITCLOUD_DB
+    volumes:
+      - ./db/data:/var/lib/mariadb:rw
+      - ./backend_scanner/uploads:/app/uploads
+    env_file:
+     - .env
+    environment:
+        TZ: Asia/Seoul
+        MARIADB_DATABASE: ${MARIADB_DATABASE}
+        MARIADB_USER: ${MARIADB_USER}
+        MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+        MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    ports:
+      - ${DB_PORT}:3306
+    restart: always
+  fastapi:
+    container_name: INITCLOUD_PARSER
+    image: floodnut/parser_api 
+    volumes:
+      - ./backend_scanner/uploads:/app/uploads
+    ports:
+      - ${PARSER_PORT}:8000
+    env_file:
+     - .env
+  springboot:
+    container_name: INITCLOUD_SCANNER
+    image: floodnut/initcloud_api 
+    volumes:
+      - ./backend_scanner/uploads:/app/uploads
+    ports:
+      - ${SCANNER_PORT}:8080
+    env_file:
+     - .env
+    depends_on:     
+     - db
+     - fastapi
+
