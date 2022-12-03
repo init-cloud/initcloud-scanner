@@ -25,6 +25,10 @@ touch .env
 ```bash
 # .env
 
+# Dashboard
+BOARD_PORT=__YOUR_BOARD_PORT__
+REACT_APP_BASE_URL=http://INITCLOUD_SCANNER/api/v1
+
 # Scanner
 SCANNER_PORT=__YOUR__SCANNER_PORT__
 
