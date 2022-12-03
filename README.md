@@ -45,8 +45,14 @@ MARIADB_ROOT_PASSWORD=__YOUR_DATABASE_ROOT_PASSWORD__
 DB_PORT=9002 #__YOUR_DATABASE_PORT__ 
 
 ```   
-4. Run with Docker-compose
+4. Run Docker-compose (API)
 ```bash
 # pwd : ./initcloud-scanner
 docker compose up -d
+```
+
+5. Run Docker (Dashboard)
+```bash
+docker inspect initcloud_scanner # For IPAddress
+docker run -it -d --name initcloud_board -e TZ=Asia/Seoul -e REACT_APP_BASE_URL=${YOUR_INITCLOUD_SCANNER_IP} -p 5555:80 floodnut/initcloud_board
 ```
