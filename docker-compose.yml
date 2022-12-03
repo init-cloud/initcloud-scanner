@@ -1,7 +1,7 @@
 services:
   dashboard:
     image: floodnut/initcloud_board
-    container_name: INITCLOUD_BOARD
+    container_name: initcloud_board
     env_file:
      - .env
     ports:
@@ -11,7 +11,7 @@ services:
     restart: always
   db:
     image: floodnut/initcloud_db
-    container_name: INITCLOUD_DB
+    container_name: initcloud_db
     volumes:
       - ./db/data:/var/lib/mariadb:rw
     env_file:
@@ -27,7 +27,7 @@ services:
       - ${DB_PORT}:3306
     restart: always
   fastapi:
-    container_name: INITCLOUD_PARSER
+    container_name: initcloud_parser
     image: floodnut/parser_api 
     volumes:
       - ./backend_scanner/uploads:/app/uploads
@@ -36,7 +36,7 @@ services:
     env_file:
      - .env
   springboot:
-    container_name: INITCLOUD_SCANNER
+    container_name: initcloud_scanner
     image: floodnut/initcloud_api 
     volumes:
       - ./backend_scanner/uploads:/app/uploads
@@ -48,4 +48,3 @@ services:
     depends_on:     
      - db
      - fastapi
-
