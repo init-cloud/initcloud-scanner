@@ -1,9 +1,19 @@
 services:
-  db:
+  initcloud_nginx:
+    image: nginx:1.21.5-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./volume/nginx.conf:/etc/nginx/nginx.conf
+    container_name: initcloud_nginx
+    depends_on:
+      - initcloud_scaner
+    restart: always
+  initcloud_db:
     image: floodnut/initcloud_db
     container_name: initcloud_db
     volumes:
-      - ./db/data:/var/lib/mariadb:rw
+      - ./volume/db/data:/var/lib/mariadb:rw
     env_file:
      - .env
     environment:
@@ -16,29 +26,30 @@ services:
     ports:
       - ${DB_PORT}:3306
     restart: always
-  fastapi:
+  initcloud_parser:
     container_name: initcloud_parser
     image: floodnut/parser_api 
     volumes:
-      - ./backend_scanner/uploads:/app/uploads
+      - ./volume/uploads:/app/uploads
     ports:
       - ${PARSER_PORT}:8000
     env_file:
      - .env
-  springboot:
+  initcloud_scanner:
     container_name: initcloud_scanner
     image: floodnut/scanner_api
     volumes:
-      - ./backend_scanner/uploads:/app/uploads
+      - ./volume/uploads:/app/uploads
     ports:
       - ${SCANNER_PORT}:8080
     env_file:
      - .env
     environment:
+      TZ: Asia/Seoul
       SPRING_DATASOURCE_URL: jdbc:mariadb://initcloud_db:3306/initcloud
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_USERNAME: ${MARIADB_ROOT}
+      SPRING_DATASOURCE_PASSWORD: ${MARIADB_ROOT_PASSWORD}
     restart: always
     depends_on:     
-     - db
-     - fastapi
+     - initcloud_db
+     - initcloud_parser
