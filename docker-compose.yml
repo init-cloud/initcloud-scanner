@@ -7,7 +7,7 @@ services:
       - ./volume/nginx.conf:/etc/nginx/nginx.conf
     container_name: initcloud_nginx
     depends_on:
-      - initcloud_scaner
+      - initcloud_scanner
     restart: always
   initcloud_db:
     image: floodnut/initcloud_db
