@@ -28,7 +28,7 @@ services:
     restart: always
   initcloud_parser:
     container_name: initcloud_parser
-    image: floodnut/parser_api 
+    image: floodnut/parser_api
     volumes:
       - ./volume/uploads:/app/uploads
     ports:
@@ -37,7 +37,7 @@ services:
      - .env
   initcloud_scanner:
     container_name: initcloud_scanner
-    image: floodnut/scanner_api
+    image: floodnut/scanner_api_v2
     volumes:
       - ./volume/uploads:/app/uploads
     ports:
@@ -47,8 +47,8 @@ services:
     environment:
       TZ: Asia/Seoul
       SPRING_DATASOURCE_URL: jdbc:mariadb://initcloud_db:3306/initcloud
-      SPRING_DATASOURCE_USERNAME: ${MARIADB_ROOT}
-      SPRING_DATASOURCE_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      SPRING_DATASOURCE_USERNAME: ${MARIADB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MARIADB_PASSWORD}
     restart: always
     depends_on:     
      - initcloud_db
