@@ -4,11 +4,10 @@
 
 </div>
  
-## Init Cloud IaC Scanner API (Beta) 
+## Init Cloud IaC Scanner (Beta) 
 Init Cloud IaC Scanner support static code scan, visualization and report.
-* This API is except Dashboard. Only API.
 
-## Which vendors we Support?
+## Which vendors we support?
 * CSP : AWS, NCP are supported.
 * IaC : Terraform is supported.
 
@@ -20,10 +19,10 @@ Init Cloud IaC Scanner support static code scan, visualization and report.
 1. Install docker & docker-compose on your environment.  
     [install docker](https://docs.docker.com/engine/install/ubuntu/)  
     [install docker-compose](https://docs.docker.com/compose/install/linux/)
-2. Cloning Init Cloud Scanner API
+2. Cloning Init Cloud Scanner
 ```bash
-git clone https://github.com/init-cloud/backend-scanner.git
-cd ./backend-scanner
+git clone https://github.com/init-cloud/initcloud-scanner.git
+cd ./initcloud-scanner
 ```  
 3. Set your Environment Variables. 
 ```bash
